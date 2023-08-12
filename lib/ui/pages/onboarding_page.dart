@@ -38,7 +38,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
           CarouselSlider(
             items: [
               Image.asset(
-                'assets/img_mankotapadang.png',
+                'assets/img_layanan.png',
                 height: 331,
               ),
               Image.asset(
@@ -106,7 +106,8 @@ class _OnboardingPageState extends State<OnboardingPage> {
                           CustomFilledButton(
                             title: 'Get Started',
                             onPressed: () {
-                              Navigator.pushNamed(context, '/sign-up');
+                              Navigator.pushNamedAndRemoveUntil(
+                                  context, '/sign-up', (route) => false);
                             },
                           ),
                           const SizedBox(
@@ -115,7 +116,8 @@ class _OnboardingPageState extends State<OnboardingPage> {
                           CustomTextButton(
                             title: 'Sign In',
                             onPressed: () {
-                              Navigator.pushNamed(context, '/sign-in');
+                              Navigator.pushNamedAndRemoveUntil(
+                                  context, '/sign-in', (route) => false);
                             },
                           ),
                         ],

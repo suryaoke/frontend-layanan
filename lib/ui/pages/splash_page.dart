@@ -18,7 +18,8 @@ class _SplashPageState extends State<SplashPage> {
     super.initState();
 
     Timer(const Duration(seconds: 2), () {
-      Navigator.pushNamed(context, '/onboarding');
+      Navigator.pushNamedAndRemoveUntil(
+          context, '/onboarding', (route) => false);
     });
   }
 
@@ -28,8 +29,8 @@ class _SplashPageState extends State<SplashPage> {
       backgroundColor: darkBackgroundColor,
       body: Center(
         child: Container(
-          width: 155,
-          height: 150,
+          width: 195,
+          height: 190,
           decoration: const BoxDecoration(
               image: DecorationImage(
             image: AssetImage(
