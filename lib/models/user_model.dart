@@ -1,15 +1,16 @@
-import 'dart:convert';
-
 class UserModel {
   final int? id;
   final String? name;
   final String? email;
   final String? username;
+  // ignore: non_constant_identifier_names
   final String? profile_image;
   final String? ttd;
   final String? jabatan;
   final String? role;
   final String? password;
+  // ignore: non_constant_identifier_names
+  final String? access_token;
 
   UserModel({
     this.id,
@@ -21,6 +22,7 @@ class UserModel {
     this.jabatan,
     this.role,
     this.password,
+    this.access_token,
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
@@ -33,6 +35,7 @@ class UserModel {
         jabatan: json['jabatan'],
         role: json['role'],
         password: json['password'],
+        access_token: json['access_token'],
       );
 
   UserModel copywith({
@@ -44,6 +47,7 @@ class UserModel {
     final String? jabatan,
     final String? role,
     final String? password,
+    final String? access_token,
   }) =>
       UserModel(
         id: id,
@@ -55,5 +59,6 @@ class UserModel {
         jabatan: jabatan ?? this.jabatan,
         role: role ?? this.role,
         password: password ?? this.password,
+        access_token: access_token ?? this.access_token,
       );
 }

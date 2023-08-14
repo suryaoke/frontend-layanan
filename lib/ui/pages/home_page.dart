@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:layanan/shared/theme.dart';
+import 'package:layanan/ui/widgets/home_info_item.dart';
 import 'package:layanan/ui/widgets/home_service_item.dart';
+import 'package:layanan/ui/widgets/home_user_item.dart';
+import 'package:layanan/ui/widgets/home_list_item.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -8,7 +11,6 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: lightBackgroundColor,
       // bottom navigation start //
       bottomNavigationBar: BottomAppBar(
         color: whiteColor,
@@ -79,9 +81,12 @@ class HomePage extends StatelessWidget {
           horizontal: 24,
         ),
         children: [
-          buildProfile(),
+          buildProfile(context),
           buildWalletCard(),
           layanan(),
+          list(),
+          listPerson(),
+          listInfo(),
         ],
       ),
     );
@@ -89,7 +94,7 @@ class HomePage extends StatelessWidget {
   // end content
 
   // bagian profile  Start//
-  Widget buildProfile() {
+  Widget buildProfile(BuildContext context) {
     return Container(
       margin: const EdgeInsets.only(
         top: 40,
@@ -118,27 +123,32 @@ class HomePage extends StatelessWidget {
               ),
             ],
           ),
-          Container(
-            width: 60,
-            height: 60,
-            decoration: const BoxDecoration(
-              shape: BoxShape.circle,
-              image: DecorationImage(
-                image: AssetImage('assets/img_profile.png'),
+          GestureDetector(
+            onTap: () {
+              Navigator.pushNamed(context, '/profile');
+            },
+            child: Container(
+              width: 60,
+              height: 60,
+              decoration: const BoxDecoration(
+                shape: BoxShape.circle,
+                image: DecorationImage(
+                  image: AssetImage('assets/img_profile.png'),
+                ),
               ),
-            ),
-            child: Align(
-              alignment: Alignment.topRight,
-              child: Container(
-                width: 16,
-                height: 16,
-                decoration:
-                    BoxDecoration(shape: BoxShape.circle, color: whiteColor),
-                child: Center(
-                  child: Icon(
-                    Icons.check_circle,
-                    color: greenColor,
-                    size: 14,
+              child: Align(
+                alignment: Alignment.topRight,
+                child: Container(
+                  width: 16,
+                  height: 16,
+                  decoration:
+                      BoxDecoration(shape: BoxShape.circle, color: whiteColor),
+                  child: Center(
+                    child: Icon(
+                      Icons.check_circle,
+                      color: greenColor,
+                      size: 14,
+                    ),
                   ),
                 ),
               ),
@@ -210,7 +220,6 @@ class HomePage extends StatelessWidget {
   // bagian card  end//
 
   // bagian layanan //
-
   Widget layanan() {
     return Container(
       margin: const EdgeInsets.only(
@@ -259,4 +268,162 @@ class HomePage extends StatelessWidget {
     );
   }
   // bagian layanan end //
+
+  // bagian list //
+  Widget list() {
+    return Container(
+      margin: const EdgeInsets.only(
+        top: 30,
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'list',
+            style: blackTextStyle.copyWith(
+              fontSize: 16,
+              fontWeight: semiBold,
+            ),
+          ),
+          Container(
+            padding: const EdgeInsets.all(22),
+            margin: const EdgeInsets.only(
+              top: 14,
+            ),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(20),
+              color: whiteColor,
+            ),
+            child: const Column(
+              children: [
+                HomeList(
+                    iconUrl: 'assets/ic_flash.png',
+                    time: 'conoth',
+                    title: 'contoh',
+                    value: 'contoh,'),
+                HomeList(
+                    iconUrl: 'assets/ic_flash.png',
+                    time: 'conoth',
+                    title: 'contoh',
+                    value: 'contoh,'),
+                HomeList(
+                    iconUrl: 'assets/ic_flash.png',
+                    time: 'conoth',
+                    title: 'contoh',
+                    value: 'contoh,'),
+                HomeList(
+                    iconUrl: 'assets/ic_flash.png',
+                    time: 'conoth',
+                    title: 'contoh',
+                    value: 'contoh,'),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+  // bagian list end//
+
+  // bagian person//
+
+  Widget listPerson() {
+    return Container(
+      margin: const EdgeInsets.only(
+        top: 30,
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'lis',
+            style: blackTextStyle.copyWith(
+              fontSize: 16,
+              fontWeight: semiBold,
+            ),
+          ),
+          const SizedBox(
+            height: 14,
+          ),
+          const SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              children: [
+                HomeUserItem(
+                  imageUrl: 'assets/ic_flash.png',
+                  username: 'surya',
+                ),
+                HomeUserItem(
+                  imageUrl: 'assets/ic_flash.png',
+                  username: 'surya',
+                ),
+                HomeUserItem(
+                  imageUrl: 'assets/ic_flash.png',
+                  username: 'surya',
+                ),
+                HomeUserItem(
+                  imageUrl: 'assets/ic_flash.png',
+                  username: 'surya',
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  // bagian person  end//
+
+// bagian info //
+  Widget listInfo() {
+    return Container(
+      margin: const EdgeInsets.only(
+        top: 30,
+        bottom: 50,
+      ),
+      child: Column(
+        children: [
+          Text(
+            'Info',
+            style: blackTextStyle.copyWith(
+              fontSize: 16,
+              fontWeight: semiBold,
+            ),
+          ),
+          const SizedBox(
+            height: 14,
+          ),
+          const Wrap(
+            spacing: 17,
+            runSpacing: 18,
+            children: [
+              HomeItemInfo(
+                imageUrl: 'assets/img_layanan.png',
+                title: 'conoth ',
+                url: 'url',
+              ),
+              HomeItemInfo(
+                imageUrl: 'assets/img_layanan.png',
+                title: 'conoth ',
+                url: 'url',
+              ),
+              HomeItemInfo(
+                imageUrl: 'assets/img_layanan.png',
+                title: 'conoth ',
+                url: 'url',
+              ),
+              HomeItemInfo(
+                imageUrl: 'assets/img_layanan.png',
+                title: 'conot',
+                url: 'https://pub.dev/packages/url_launcher',
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  // bagian info end//
 }

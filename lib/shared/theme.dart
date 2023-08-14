@@ -8,7 +8,7 @@ Color lightBackgroundColor = const Color(0xffF6F8FB);
 Color darkBackgroundColor = const Color(0xff020518);
 Color blueColor = const Color(0xff53C1F9);
 Color purpleColor = const Color(0xff5142E6);
-Color greenColor = const Color(0xffF22B07D);
+Color greenColor = const Color(0xfff22b07d);
 Color numberBackgroundColor = const Color(0xff1a1D2E);
 Color redColor = const Color(0xffFF2566);
 

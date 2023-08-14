@@ -1,7 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:layanan/shared/theme.dart';
-import 'package:layanan/ui/pages/sign_in_page.dart';
 import 'package:layanan/ui/widgets/buttons.dart';
 
 class OnboardingPage extends StatefulWidget {
@@ -30,7 +29,6 @@ class _OnboardingPageState extends State<OnboardingPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: lightBackgroundColor,
       body: Center(
           child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
