@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:layanan/blocs/auth/auth_bloc.dart';
 import 'package:layanan/shared/theme.dart';
+import 'package:layanan/ui/pages/Tugas.dart';
 import 'package:layanan/ui/pages/absensi.dart';
 import 'package:layanan/ui/pages/home_page.dart';
+import 'package:layanan/ui/pages/jadwalmapel.dart';
+import 'package:layanan/ui/pages/nilai.dart';
 import 'package:layanan/ui/pages/onboarding_page.dart';
 import 'package:layanan/ui/pages/profile_edit_page.dart';
 import 'package:layanan/ui/pages/profile_page.dart';
@@ -53,6 +56,9 @@ class MyApp extends StatelessWidget {
           '/profile': (context) => const ProfilePage(),
           '/profile/edit': (context) => const ProfileEditPage(),
           '/absensi/all': (context) => const AbsensiPage(),
+          '/nilai/all': (context) => const NilaiPage(),
+          '/tugas/all': (context) => const TugasPage(),
+          '/jadwal/all': (context) => const JadwalmapelPage(),
         },
       ),
     );

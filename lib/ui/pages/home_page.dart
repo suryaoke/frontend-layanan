@@ -18,45 +18,52 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       // bottom navigation start //
       bottomNavigationBar: BottomAppBar(
-        color: whiteColor,
         shape: const CircularNotchedRectangle(),
-        clipBehavior: Clip.antiAlias,
-        notchMargin: 6,
-        elevation: 0,
         child: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
           backgroundColor: whiteColor,
-          elevation: 0,
-          selectedItemColor: blueColor,
+          selectedItemColor: blackColor,
           unselectedItemColor: blackColor,
           showSelectedLabels: true,
           showUnselectedLabels: true,
-          selectedLabelStyle: blueTextStyle.copyWith(
-            fontSize: 15,
-            fontWeight: medium,
-          ),
           unselectedLabelStyle: blackTextStyle.copyWith(
-            fontSize: 15,
+            fontSize: 14,
             fontWeight: medium,
           ),
           items: [
             BottomNavigationBarItem(
-                icon: Image.asset(
+              icon: GestureDetector(
+                onTap: () {
+                  Navigator.pushNamed(context, '/jadwal/all');
+                },
+                child: Image.asset(
                   'assets/fi_file-text.png',
                   width: 25,
-                  color: blueColor,
                 ),
-                label: 'Jadwal Mapel'),
+              ),
+              label: 'Jadwal Mapel',
+            ),
             BottomNavigationBarItem(
-                icon: Image.asset(
+              icon: GestureDetector(
+                onTap: () {
+                  Navigator.pushNamed(context, '/absensi/all');
+                },
+                child: Image.asset(
                   'assets/fi_user.png',
                   width: 25,
                 ),
-                label: 'Absensi'),
+              ),
+              label: 'Absensi',
+            ),
             BottomNavigationBarItem(
-                icon: Image.asset(
-                  'assets/ic_flash.png',
-                  width: 25,
+                icon: GestureDetector(
+                  onTap: () {
+                    Navigator.pushNamed(context, '/nilai/all');
+                  },
+                  child: Image.asset(
+                    'assets/ic_flash.png',
+                    width: 25,
+                  ),
                 ),
                 label: 'Nilai Harian'),
           ],
@@ -266,15 +273,23 @@ class HomePage extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              HomeServiceItem(
-                iconUrl: 'assets/fi_file-text.png',
-                title: 'Tugas',
-                onTap: () {},
+              GestureDetector(
+                onTap: () {
+                  Navigator.pushNamed(context, '/tugas/all');
+                },
+                child: const HomeServiceItem(
+                  iconUrl: 'assets/fi_file-text.png',
+                  title: 'Tugas',
+                ),
               ),
-              HomeServiceItem(
-                iconUrl: 'assets/fi_file-text.png',
-                title: 'Jadwal Mapel',
-                onTap: () {},
+              GestureDetector(
+                onTap: () {
+                  Navigator.pushNamed(context, '/jadwal/all');
+                },
+                child: const HomeServiceItem(
+                  iconUrl: 'assets/fi_file-text.png',
+                  title: 'Jadwal Mapel',
+                ),
               ),
               GestureDetector(
                 onTap: () {
@@ -287,7 +302,7 @@ class HomePage extends StatelessWidget {
               ),
               GestureDetector(
                 onTap: () {
-                  Navigator.pushNamed(context, '/absensi/all');
+                  Navigator.pushNamed(context, '/nilai/all');
                 },
                 child: const HomeServiceItem(
                   iconUrl: 'assets/ic_flash.png',
