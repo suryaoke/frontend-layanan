@@ -1,19 +1,38 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:layanan/models/absensi_model.dart';
 import 'package:layanan/shared/theme.dart';
 
 class HomeList extends StatelessWidget {
-  final String iconUrl;
-  final String title;
-  final String time;
-  final String value;
+  final AbsensiModel absensi;
 
   const HomeList({
     Key? key,
-    required this.iconUrl,
-    required this.time,
-    required this.title,
-    required this.value,
+    required this.absensi,
   }) : super(key: key);
+  String getKeterangan(String? status) {
+    if (status == null) {
+      return 'Tidak diketahui';
+    }
+    String keterangan;
+    switch (int.tryParse(status) ?? -1) {
+      case 0:
+        keterangan = 'Alfa';
+        break;
+      case 1:
+        keterangan = 'Hadir';
+        break;
+      case 2:
+        keterangan = 'Izin';
+        break;
+      case 3:
+        keterangan = 'Sakit';
+        break;
+      default:
+        keterangan = '-';
+    }
+    return keterangan;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,8 +43,8 @@ class HomeList extends StatelessWidget {
       child: Row(
         children: [
           Image.asset(
-            iconUrl,
-            width: 48,
+            'assets/img_profile.png',
+            width: 25,
           ),
           const SizedBox(
             width: 16,
@@ -35,26 +54,38 @@ class HomeList extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  title,
+                  absensi.siswaModel!.nama.toString(),
                   style: blackTextStyle.copyWith(
-                    fontSize: 16,
+                    fontSize: 18,
                     fontWeight: medium,
                   ),
                 ),
                 const SizedBox(
-                  height: 2,
+                  height: 1,
                 ),
                 Text(
-                  time,
-                  style: greenTextStyle.copyWith(
-                    fontSize: 12,
+                  'Status: ${getKeterangan(absensi.status.toString())}',
+                  style: blackTextStyle.copyWith(
+                    fontSize: 14,
+                  ),
+                ),
+                Text(
+                  'Ket: ${(absensi.ket.toString())}',
+                  style: blackTextStyle.copyWith(
+                    fontSize: 14,
+                  ),
+                ),
+                Text(
+                  'Mapel: ${(absensi.mapelModel!.nama.toString())}',
+                  style: blackTextStyle.copyWith(
+                    fontSize: 14,
                   ),
                 ),
               ],
             ),
           ),
           Text(
-            value,
+            DateFormat('MMM dd yyyy').format(absensi.tanggal ?? DateTime.now()),
             style: blackTextStyle.copyWith(
               fontSize: 16,
               fontWeight: medium,

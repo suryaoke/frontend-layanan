@@ -3,62 +3,64 @@ class UserModel {
   final String? name;
   final String? email;
   final String? username;
-  // ignore: non_constant_identifier_names
-  final String? profile_image;
+  final String? profileImage;
   final String? ttd;
   final String? jabatan;
   final String? role;
   final String? password;
-  // ignore: non_constant_identifier_names
-  final String? access_token;
+  final String? token;
 
   UserModel({
     this.id,
     this.name,
     this.email,
     this.username,
-    this.profile_image,
+    this.profileImage,
     this.ttd,
     this.jabatan,
     this.role,
     this.password,
-    this.access_token,
+    this.token,
   });
 
-  factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
-        id: json['id'],
-        name: json['name'],
-        email: json['email'],
-        username: json['username'],
-        profile_image: json['profile_image'],
-        ttd: json['ttd'],
-        jabatan: json['jabatan'],
-        role: json['role'],
-        password: json['password'],
-        access_token: json['access_token'],
-      );
+  factory UserModel.fromJson(Map<String, dynamic> json) {
+    return UserModel(
+      id: json['result']['user']['id'],
+      name: json['result']['user']['name'],
+      email: json['result']['user']['email'],
+      username: json['result']['user']['username'],
+      profileImage: json['result']['user']['profile_image'],
+      ttd: null,
+      jabatan: null,
+      role: json['result']['user']['role'],
+      password: null,
+      token: json['result']['user']['token'],
+    );
+  }
 
-  UserModel copywith({
-    final String? name,
-    final String? email,
-    final String? username,
-    final String? profile_image,
-    final String? ttd,
-    final String? jabatan,
-    final String? role,
-    final String? password,
-    final String? access_token,
-  }) =>
-      UserModel(
-        id: id,
-        name: name ?? this.name,
-        email: email ?? this.email,
-        username: username ?? this.username,
-        profile_image: profile_image ?? this.profile_image,
-        ttd: ttd ?? this.ttd,
-        jabatan: jabatan ?? this.jabatan,
-        role: role ?? this.role,
-        password: password ?? this.password,
-        access_token: access_token ?? this.access_token,
-      );
+  UserModel copyWith({
+    int? id,
+    String? name,
+    String? email,
+    String? username,
+    String? profileImage,
+    String? ttd,
+    String? jabatan,
+    String? role,
+    String? password,
+    String? token,
+  }) {
+    return UserModel(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      email: email ?? this.email,
+      username: username ?? this.username,
+      profileImage: profileImage ?? this.profileImage,
+      ttd: ttd ?? this.ttd,
+      jabatan: jabatan ?? this.jabatan,
+      role: role ?? this.role,
+      password: password ?? this.password,
+      token: token ?? this.token,
+    );
+  }
 }

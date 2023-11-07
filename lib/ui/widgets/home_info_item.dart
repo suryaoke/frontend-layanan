@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:layanan/models/info_model.dart';
+import 'package:layanan/shared/shared_values.dart';
 import 'package:layanan/shared/theme.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class HomeItemInfo extends StatelessWidget {
-  final String imageUrl;
-  final String title;
-  final String url;
+ 
+  final InfoModel info;
 
   const HomeItemInfo({
     Key? key,
-    required this.imageUrl,
-    required this.title,
-    required this.url,
+    required this.info,
   }) : super(key: key);
 
   @override
@@ -19,45 +18,50 @@ class HomeItemInfo extends StatelessWidget {
     return GestureDetector(
       onTap: () async {
         // ignore: deprecated_member_use
-        if (await canLaunch(url)) {
+        if (await canLaunch(info.link.toString())) {
           // ignore: deprecated_member_use
-          launch(url);
+          launch(info.link.toString());
         }
       },
-      child: Container(
-        width: 155,
-        height: 176,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
-          color: whiteColor,
-        ),
-        child: Column(children: [
-          ClipRRect(
-            borderRadius: const BorderRadius.vertical(
-              top: Radius.circular(20),
-            ),
-            child: Image.asset(
-              imageUrl,
-              width: 155,
-              height: 110,
-              fit: BoxFit.cover,
-            ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8),
+        child: Container(
+          width: 155,
+          height: 176,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(20),
+            color: whiteColor,
           ),
-          const SizedBox(
-            height: 12,
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 12),
-            child: Text(
-              title,
-              style: blackTextStyle.copyWith(
-                fontWeight: medium,
-                overflow: TextOverflow.ellipsis,
+          child: Column(
+            children: [
+              ClipRRect(
+                borderRadius: const BorderRadius.vertical(
+                  top: Radius.circular(20),
+                ),
+                child: Image.network(
+                  '$baseUrl/admin-images/${info.image.toString()}',
+                  width: 155,
+                  height: 110,
+                  fit: BoxFit.cover,
+                ),
               ),
-              maxLines: 2,
-            ),
+              const SizedBox(
+                height: 12,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 12),
+                child: Text(
+                  info.nama.toString(),
+                  style: blackTextStyle.copyWith(
+                    fontWeight: medium,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  maxLines: 2,
+                ),
+              ),
+            ],
           ),
-        ]),
+        ),
       ),
     );
   }

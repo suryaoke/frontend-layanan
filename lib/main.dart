@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:layanan/blocs/auth/auth_bloc.dart';
 import 'package:layanan/shared/theme.dart';
+import 'package:layanan/ui/pages/absensi.dart';
 import 'package:layanan/ui/pages/home_page.dart';
 import 'package:layanan/ui/pages/onboarding_page.dart';
+import 'package:layanan/ui/pages/profile_edit_page.dart';
 import 'package:layanan/ui/pages/profile_page.dart';
 import 'package:layanan/ui/pages/sign_in_page.dart';
 import 'package:layanan/ui/pages/sign_up_page.dart';
@@ -21,8 +23,8 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          //  create: (context) => AuthBloc()..add(AuthGetCurrentUser()),
-          create: (context) => AuthBloc(),
+          create: (context) => AuthBloc()..add(AuthGetCurrentUser()),
+          //create: (context) => AuthBloc(),
         ),
       ],
       child: MaterialApp(
@@ -49,6 +51,8 @@ class MyApp extends StatelessWidget {
           '/sign-up': (context) => const SignUpPage(),
           '/home': (context) => const HomePage(),
           '/profile': (context) => const ProfilePage(),
+          '/profile/edit': (context) => const ProfileEditPage(),
+          '/absensi/all': (context) => const AbsensiPage(),
         },
       ),
     );

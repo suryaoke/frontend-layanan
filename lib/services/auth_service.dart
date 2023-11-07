@@ -16,24 +16,26 @@ class AuthService {
 
       if (res.statusCode == 200) {
         UserModel user = UserModel.fromJson(jsonDecode(res.body));
-        user = user.copywith(password: data.password);
-        await StoreCredentialToLocal(user);
+        user = user.copyWith(password: data.password);
+        await storeCredentialToLocal(user);
 
         return user;
+      } else if (res.statusCode == 401) {
+        throw Exception('Hanya bisa akses di web.');
       } else {
-        throw jsonDecode(res.body)['message'];
+        throw Exception('Authentication failed');
       }
     } catch (e) {
       rethrow;
     }
   }
 
-  Future<void> StoreCredentialToLocal(UserModel user) async {
+  Future<void> storeCredentialToLocal(UserModel user) async {
     try {
       const storage = FlutterSecureStorage();
       await storage.write(key: 'username', value: user.username);
       await storage.write(key: 'password', value: user.password);
-      await storage.write(key: ' access_token', value: user.access_token);
+      await storage.write(key: 'token', value: user.token);
     } catch (e) {
       rethrow;
     }
@@ -60,9 +62,9 @@ class AuthService {
   Future<String> getToken() async {
     String token = '';
     const storage = FlutterSecureStorage();
-    String? value = await storage.read(key: 'access_token');
+    String? value = await storage.read(key: 'token');
     if (value != null) {
-      token = 'Bearer' + value;
+      token = 'Bearer ' + value;
     }
     return token;
   }
@@ -70,5 +72,21 @@ class AuthService {
   Future<void> clearLocalStorage() async {
     const storage = FlutterSecureStorage();
     await storage.deleteAll();
+  }
+
+  Future<void> logout() async {
+    try {
+      final token = await getToken();
+      final res = await http.post(Uri.parse('$baseUrl/logout'), headers: {
+        'Authorization': token,
+      });
+      if (res.statusCode == 200) {
+        await clearLocalStorage();
+      } else {
+        throw jsonDecode(res.body)['message'];
+      }
+    } catch (e) {
+      rethrow;
+    }
   }
 }

@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:layanan/blocs/absensi/absensi_bloc.dart';
+import 'package:layanan/blocs/auth/auth_bloc.dart';
+import 'package:layanan/blocs/info/info_bloc.dart';
+
 import 'package:layanan/shared/theme.dart';
 import 'package:layanan/ui/widgets/home_info_item.dart';
 import 'package:layanan/ui/widgets/home_service_item.dart';
-import 'package:layanan/ui/widgets/home_user_item.dart';
 import 'package:layanan/ui/widgets/home_list_item.dart';
+import 'package:layanan/shared/shared_values.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -27,54 +32,50 @@ class HomePage extends StatelessWidget {
           showSelectedLabels: true,
           showUnselectedLabels: true,
           selectedLabelStyle: blueTextStyle.copyWith(
-            fontSize: 10,
+            fontSize: 15,
             fontWeight: medium,
           ),
           unselectedLabelStyle: blackTextStyle.copyWith(
-            fontSize: 10,
+            fontSize: 15,
             fontWeight: medium,
           ),
           items: [
             BottomNavigationBarItem(
                 icon: Image.asset(
-                  'assets/ic_flash.png',
-                  width: 20,
+                  'assets/fi_file-text.png',
+                  width: 25,
                   color: blueColor,
                 ),
-                label: 'Overview'),
+                label: 'Jadwal Mapel'),
+            BottomNavigationBarItem(
+                icon: Image.asset(
+                  'assets/fi_user.png',
+                  width: 25,
+                ),
+                label: 'Absensi'),
             BottomNavigationBarItem(
                 icon: Image.asset(
                   'assets/ic_flash.png',
-                  width: 20,
+                  width: 25,
                 ),
-                label: 'Overview'),
-            BottomNavigationBarItem(
-                icon: Image.asset(
-                  'assets/ic_flash.png',
-                  width: 20,
-                ),
-                label: 'Overview'),
-            BottomNavigationBarItem(
-                icon: Image.asset(
-                  'assets/ic_flash.png',
-                  width: 20,
-                ),
-                label: 'Overview'),
+                label: 'Nilai Harian'),
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        backgroundColor: purpleColor,
-        child: Image.asset(
-          'assets/ic_plus_circle.png',
-          width: 24,
-        ),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      // bottom navigation end //
+      //button ditenganh
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: () {},
+      //   backgroundColor: purpleColor,
+      //   child: Image.asset(
+      //     'assets/ic_plus_circle.png',
+      //     width: 24,
+      //   ),
+      // ),
+      // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      // // bottom navigation end //
+      //button ditengah
 
-      // start content //
+      // // start content //
 
       body: ListView(
         padding: const EdgeInsets.symmetric(
@@ -83,10 +84,9 @@ class HomePage extends StatelessWidget {
         children: [
           buildProfile(context),
           buildWalletCard(),
-          layanan(),
-          list(),
-          listPerson(),
-          listInfo(),
+          akademik(context),
+          absensi(),
+          informasi(),
         ],
       ),
     );
@@ -95,69 +95,76 @@ class HomePage extends StatelessWidget {
 
   // bagian profile  Start//
   Widget buildProfile(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.only(
-        top: 40,
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Surya Sahputra',
-                style: greyTextStyle.copyWith(
-                  fontSize: 16,
+    return BlocBuilder<AuthBloc, AuthState>(
+      builder: (context, state) {
+        if (state is AuthSuccess) {
+          return Container(
+            margin: const EdgeInsets.only(
+              top: 40,
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const SizedBox(
+                      height: 2,
+                    ),
+                    Text(
+                      state.user.name.toString(),
+                      style: blackTextStyle.copyWith(
+                        fontSize: 20,
+                        fontWeight: semiBold,
+                      ),
+                    ),
+                  ],
                 ),
-              ),
-              const SizedBox(
-                height: 2,
-              ),
-              Text(
-                'Surya',
-                style: blackTextStyle.copyWith(
-                  fontSize: 20,
-                  fontWeight: semiBold,
-                ),
-              ),
-            ],
-          ),
-          GestureDetector(
-            onTap: () {
-              Navigator.pushNamed(context, '/profile');
-            },
-            child: Container(
-              width: 60,
-              height: 60,
-              decoration: const BoxDecoration(
-                shape: BoxShape.circle,
-                image: DecorationImage(
-                  image: AssetImage('assets/img_profile.png'),
-                ),
-              ),
-              child: Align(
-                alignment: Alignment.topRight,
-                child: Container(
-                  width: 16,
-                  height: 16,
-                  decoration:
-                      BoxDecoration(shape: BoxShape.circle, color: whiteColor),
-                  child: Center(
-                    child: Icon(
-                      Icons.check_circle,
-                      color: greenColor,
-                      size: 14,
+                GestureDetector(
+                  onTap: () {
+                    Navigator.pushNamed(context, '/profile');
+                  },
+                  child: Container(
+                    width: 60,
+                    height: 60,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      image: DecorationImage(
+                        image: state.user.profileImage == 'null' ||
+                                state.user.profileImage == '0'
+                            ? const AssetImage('assets/img_profile.png')
+                            : NetworkImage(
+                                '$baseUrl/admin-images/${state.user.profileImage}',
+                              ) as ImageProvider,
+                      ),
+                    ),
+                    child: Align(
+                      alignment: Alignment.topRight,
+                      child: Container(
+                        width: 16,
+                        height: 16,
+                        decoration: BoxDecoration(
+                            shape: BoxShape.circle, color: whiteColor),
+                        child: Center(
+                          child: Icon(
+                            Icons.check_circle,
+                            color: greenColor,
+                            size: 14,
+                          ),
+                        ),
+                      ),
                     ),
                   ),
                 ),
-              ),
+              ],
             ),
-          ),
-        ],
-      ),
+          );
+        }
+        return Container();
+      },
     );
   }
+
   // bagian profil End //
 
   // bagian card //
@@ -181,38 +188,55 @@ class HomePage extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          Row(
+            children: [
+              Text(
+                'Profile Siswa ',
+                style: whiteTextStyle.copyWith(
+                  fontSize: 20,
+                  fontWeight: medium,
+                  // Ubah ke string yang tepat, misalnya 'bold'
+                ),
+              ),
+              const SizedBox(width: 8), // Jarak antara ikon dan teks
+              ColorFiltered(
+                colorFilter: const ColorFilter.mode(
+                  Colors.white, // Ubah warna sesuai kebutuhan
+                  BlendMode.srcIn,
+                ),
+                child: Image.asset(
+                  'assets/fi_user.png', // Ubah dengan path gambar yang sesuai
+                  width: 30, // Sesuaikan lebar gambar
+                  height: 30, // Sesuaikan tinggi gambar
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(
+            height: 22,
+          ),
+          // NamaWidget(siswa: siswa),
           Text(
-            'Surya',
+            'Nisn : 1235',
             style: whiteTextStyle.copyWith(
               fontSize: 18,
-              fontWeight: medium,
+              fontWeight: FontWeight
+                  .normal, // Ubah ke string yang tepat, misalnya 'normal'
+              letterSpacing: 4,
+            ),
+          ),
+          Text(
+            'Kelas : 1235',
+            style: whiteTextStyle.copyWith(
+              fontSize: 18,
+              fontWeight: FontWeight
+                  .normal, // Ubah ke string yang tepat, misalnya 'normal'
+              letterSpacing: 4,
             ),
           ),
           const SizedBox(
-            height: 28,
+            height: 1,
           ),
-          Text(
-            '**** **** **** 1235',
-            style: whiteTextStyle.copyWith(
-              fontSize: 18,
-              fontWeight: medium,
-              letterSpacing: 6,
-            ),
-          ),
-          const SizedBox(
-            height: 21,
-          ),
-          Text(
-            'balence',
-            style: whiteTextStyle,
-          ),
-          Text(
-            'Contoh',
-            style: whiteTextStyle.copyWith(
-              fontSize: 24,
-              fontWeight: semiBold,
-            ),
-          )
         ],
       ),
     );
@@ -220,7 +244,7 @@ class HomePage extends StatelessWidget {
   // bagian card  end//
 
   // bagian layanan //
-  Widget layanan() {
+  Widget akademik(BuildContext context) {
     return Container(
       margin: const EdgeInsets.only(
         top: 30,
@@ -229,10 +253,11 @@ class HomePage extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Layanan',
+            'Akademik',
             style: blackTextStyle.copyWith(
               fontSize: 16,
-              fontWeight: semiBold,
+              fontWeight: FontWeight
+                  .w600, // Menyesuaikan dengan nilai FontWeight yang sesuai
             ),
           ),
           const SizedBox(
@@ -242,24 +267,32 @@ class HomePage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               HomeServiceItem(
-                iconUrl: 'assets/ic_flash.png',
-                title: 'Top up',
+                iconUrl: 'assets/fi_file-text.png',
+                title: 'Tugas',
                 onTap: () {},
               ),
               HomeServiceItem(
-                iconUrl: 'assets/ic_flash.png',
-                title: 'Top up',
+                iconUrl: 'assets/fi_file-text.png',
+                title: 'Jadwal Mapel',
                 onTap: () {},
               ),
-              HomeServiceItem(
-                iconUrl: 'assets/ic_flash.png',
-                title: 'Top up',
-                onTap: () {},
+              GestureDetector(
+                onTap: () {
+                  Navigator.pushNamed(context, '/absensi/all');
+                },
+                child: const HomeServiceItem(
+                  iconUrl: 'assets/fi_user.png',
+                  title: 'Absensi',
+                ),
               ),
-              HomeServiceItem(
-                iconUrl: 'assets/ic_flash.png',
-                title: 'Top up',
-                onTap: () {},
+              GestureDetector(
+                onTap: () {
+                  Navigator.pushNamed(context, '/absensi/all');
+                },
+                child: const HomeServiceItem(
+                  iconUrl: 'assets/ic_flash.png',
+                  title: 'Nilai Harian',
+                ),
               ),
             ],
           ),
@@ -267,10 +300,11 @@ class HomePage extends StatelessWidget {
       ),
     );
   }
+
   // bagian layanan end //
 
   // bagian list //
-  Widget list() {
+  Widget absensi() {
     return Container(
       margin: const EdgeInsets.only(
         top: 30,
@@ -279,7 +313,7 @@ class HomePage extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'list',
+            'Absensi',
             style: blackTextStyle.copyWith(
               fontSize: 16,
               fontWeight: semiBold,
@@ -294,29 +328,22 @@ class HomePage extends StatelessWidget {
               borderRadius: BorderRadius.circular(20),
               color: whiteColor,
             ),
-            child: const Column(
-              children: [
-                HomeList(
-                    iconUrl: 'assets/ic_flash.png',
-                    time: 'conoth',
-                    title: 'contoh',
-                    value: 'contoh,'),
-                HomeList(
-                    iconUrl: 'assets/ic_flash.png',
-                    time: 'conoth',
-                    title: 'contoh',
-                    value: 'contoh,'),
-                HomeList(
-                    iconUrl: 'assets/ic_flash.png',
-                    time: 'conoth',
-                    title: 'contoh',
-                    value: 'contoh,'),
-                HomeList(
-                    iconUrl: 'assets/ic_flash.png',
-                    time: 'conoth',
-                    title: 'contoh',
-                    value: 'contoh,'),
-              ],
+            child: BlocProvider(
+              create: (context) => AbsensiBloc()..add(AbsensiGet()),
+              child: BlocBuilder<AbsensiBloc, AbsensiState>(
+                builder: (context, state) {
+                  if (state is AbsensiSuccess) {
+                    return Column(
+                      children: state.absensi.map((absensi) {
+                        return HomeList(absensi: absensi);
+                      }).toList(),
+                    );
+                  }
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                },
+              ),
             ),
           ),
         ],
@@ -325,105 +352,50 @@ class HomePage extends StatelessWidget {
   }
   // bagian list end//
 
-  // bagian person//
-
-  Widget listPerson() {
+  // bagian Informasi//
+  Widget informasi() {
     return Container(
       margin: const EdgeInsets.only(
         top: 30,
+        bottom: 40,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'lis',
+            'Informasi',
             style: blackTextStyle.copyWith(
               fontSize: 16,
-              fontWeight: semiBold,
+              fontWeight: FontWeight.w600,
             ),
           ),
           const SizedBox(
             height: 14,
           ),
-          const SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Row(
-              children: [
-                HomeUserItem(
-                  imageUrl: 'assets/ic_flash.png',
-                  username: 'surya',
-                ),
-                HomeUserItem(
-                  imageUrl: 'assets/ic_flash.png',
-                  username: 'surya',
-                ),
-                HomeUserItem(
-                  imageUrl: 'assets/ic_flash.png',
-                  username: 'surya',
-                ),
-                HomeUserItem(
-                  imageUrl: 'assets/ic_flash.png',
-                  username: 'surya',
-                ),
-              ],
+          BlocProvider(
+            create: (context) => InfoBloc()..add(InfoGet()),
+            child: BlocBuilder<InfoBloc, InfoState>(
+              builder: (context, state) {
+                if (state is InfoSuccess) {
+                  return SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children: state.info.map((info) {
+                        return HomeItemInfo(info: info);
+                      }).toList(),
+                    ),
+                  );
+                }
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              },
             ),
           ),
         ],
       ),
     );
   }
-
-  // bagian person  end//
 
 // bagian info //
-  Widget listInfo() {
-    return Container(
-      margin: const EdgeInsets.only(
-        top: 30,
-        bottom: 50,
-      ),
-      child: Column(
-        children: [
-          Text(
-            'Info',
-            style: blackTextStyle.copyWith(
-              fontSize: 16,
-              fontWeight: semiBold,
-            ),
-          ),
-          const SizedBox(
-            height: 14,
-          ),
-          const Wrap(
-            spacing: 17,
-            runSpacing: 18,
-            children: [
-              HomeItemInfo(
-                imageUrl: 'assets/img_layanan.png',
-                title: 'conoth ',
-                url: 'url',
-              ),
-              HomeItemInfo(
-                imageUrl: 'assets/img_layanan.png',
-                title: 'conoth ',
-                url: 'url',
-              ),
-              HomeItemInfo(
-                imageUrl: 'assets/img_layanan.png',
-                title: 'conoth ',
-                url: 'url',
-              ),
-              HomeItemInfo(
-                imageUrl: 'assets/img_layanan.png',
-                title: 'conot',
-                url: 'https://pub.dev/packages/url_launcher',
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-
-  // bagian info end//
 }

@@ -14,16 +14,11 @@ class _OnboardingPageState extends State<OnboardingPage> {
   int currentIndex = 0;
   CarouselController carouselController = CarouselController();
 
-  List<String> titles = [
-    'Selamat datang \n Orang Tua',
-    'Selamat datang \n guru',
-    'Selamat datang \n Login',
-  ];
+  List<String> titles = ['SIAKAD \n MAN 1 Kota Padang', 'Selamat datang :)'];
 
   List<String> subtitles = [
-    'Selamat datang kuu \n Orang Tua',
-    'Selamat datang kuu \n guru',
-    'Selamat datang kuu \n Login',
+    'Menuju Sistem Digital 2023.',
+    'Silahkan Login',
   ];
 
   @override
@@ -36,11 +31,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
           CarouselSlider(
             items: [
               Image.asset(
-                'assets/img_layanan.png',
-                height: 331,
-              ),
-              Image.asset(
-                'assets/img_mankotapadang.png',
+                'assets/img_layanan2.png',
                 height: 331,
               ),
               Image.asset(
@@ -96,27 +87,30 @@ class _OnboardingPageState extends State<OnboardingPage> {
                   textAlign: TextAlign.center,
                 ),
                 SizedBox(
-                  height: currentIndex == 2 ? 38 : 50,
+                  height: currentIndex == 1 ? 38 : 50,
                 ),
-                currentIndex == 2
+                currentIndex == 1
                     ? Column(
                         children: [
+                          // CustomFilledButton(
+                          //   title: 'Get Started',
+                          //   onPressed: () {
+                          //     Navigator.pushNamedAndRemoveUntil(
+                          //         context, '/sign-up', (route) => false);
+                          //   },
+                          // ),
+                          // const SizedBox(
+                          //   height: 20,
+                          // ),
                           CustomFilledButton(
-                            title: 'Get Started',
-                            onPressed: () {
-                              Navigator.pushNamedAndRemoveUntil(
-                                  context, '/sign-up', (route) => false);
-                            },
-                          ),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          CustomTextButton(
-                            title: 'Sign In',
+                            title: 'Login',
                             onPressed: () {
                               Navigator.pushNamedAndRemoveUntil(
                                   context, '/sign-in', (route) => false);
                             },
+                          ),
+                          const SizedBox(
+                            height: 20,
                           ),
                         ],
                       )
@@ -144,19 +138,6 @@ class _OnboardingPageState extends State<OnboardingPage> {
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
                               color: currentIndex == 1
-                                  ? blueColor
-                                  : lightBackgroundColor,
-                            ),
-                          ),
-                          Container(
-                            width: 12,
-                            height: 12,
-                            margin: const EdgeInsets.only(
-                              right: 10,
-                            ),
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: currentIndex == 2
                                   ? blueColor
                                   : lightBackgroundColor,
                             ),

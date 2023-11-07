@@ -58,7 +58,7 @@ class _SignInPageState extends State<SignInPage> {
             children: [
               Container(
                 width: 155,
-                height: 100,
+                height: 150,
                 margin: const EdgeInsets.only(
                   top: 100,
                   bottom: 100,
@@ -143,12 +143,12 @@ class _SignInPageState extends State<SignInPage> {
               const SizedBox(
                 height: 50,
               ),
-              CustomTextButton(
-                title: 'Create New Account',
-                onPressed: () {
-                  Navigator.pushNamed(context, '/sign-up');
-                },
-              )
+              // CustomTextButton(
+              //   title: 'Create New Account',
+              //   onPressed: () {
+              //     Navigator.pushNamed(context, '/sign-up');
+              //   },
+              // )
             ],
           );
         },

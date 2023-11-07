@@ -46,7 +46,8 @@ class HomeUserItem extends StatelessWidget {
             username,
             style: blackTextStyle.copyWith(
               fontSize: 12,
-              fontWeight: medium,
+              fontWeight: FontWeight
+                  .w500, // Mengganti nilai medium dengan FontWeight.w500
             ),
           ),
         ],
