@@ -14,6 +14,7 @@ class AbsensiPage extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Rekap Absensi '),
       ),
+     
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(20.0),
@@ -22,6 +23,7 @@ class AbsensiPage extends StatelessWidget {
               borderRadius: BorderRadius.circular(20),
               color: whiteColor,
             ),
+            
             child: FutureBuilder<List<AbsensiDataModel>>(
               future: AbsensiDataService().getAbsensidatas(),
               builder: (context, snapshot) {
@@ -33,6 +35,7 @@ class AbsensiPage extends StatelessWidget {
                   return Center(child: Text('No Data'));
                 } else {
                   List<AbsensiDataModel> data = snapshot.data!;
+                  
                   return SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
                     child: DataTable(
@@ -69,6 +72,8 @@ class AbsensiPage extends StatelessWidget {
                           ),
                         ),
                       ],
+                     
+                     
                       rows: data
                           .map(
                             (item) => DataRow(

@@ -70,12 +70,6 @@ class NilaiPage extends StatelessWidget {
                         ),
                         DataColumn(
                           label: Text(
-                            'Kd',
-                            style: TextStyle(fontStyle: FontStyle.italic),
-                          ),
-                        ),
-                        DataColumn(
-                          label: Text(
                             'Nilai',
                             style: TextStyle(fontStyle: FontStyle.italic),
                           ),
@@ -95,7 +89,6 @@ class NilaiPage extends StatelessWidget {
                             DataCell(Text('3')),
                             DataCell(Text('2')),
                             DataCell(Text('2')),
-                            DataCell(Text('5')),
                             DataCell(Text('5')),
                           ],
                         ),
@@ -144,12 +137,6 @@ class NilaiPage extends StatelessWidget {
                         ),
                         DataColumn(
                           label: Text(
-                            'Kd',
-                            style: TextStyle(fontStyle: FontStyle.italic),
-                          ),
-                        ),
-                        DataColumn(
-                          label: Text(
                             'Nilai',
                             style: TextStyle(fontStyle: FontStyle.italic),
                           ),
@@ -167,7 +154,6 @@ class NilaiPage extends StatelessWidget {
                             DataCell(Text('BAdul')),
                             DataCell(Text('123456')),
                             DataCell(Text('3')),
-                            DataCell(Text('2')),
                             DataCell(Text('2')),
                             DataCell(Text('5')),
                             DataCell(Text('5')),

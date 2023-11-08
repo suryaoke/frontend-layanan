@@ -8,22 +8,22 @@ class SiswaService {
   Future<List<SiswaModel>> getSiswas() async {
     try {
       final token = await AuthService().getToken();
-
-      var response = await http.get(
+      final response = await http.get(
         Uri.parse('$baseUrl/siswa'),
-        headers: {
-          'Authorization': token,
-        },
+        headers: {'Authorization': token},
       );
 
       if (response.statusCode == 200) {
         List<dynamic> data = jsonDecode(response.body)['siswa'];
         return data.map((siswa) => SiswaModel.fromJson(siswa)).toList();
+      } else {
+        throw Exception(
+            'Failed to load siswas, status code ${response.statusCode}');
       }
-
-      throw jsonDecode(response.body)['message'];
-    } catch (e) {
-      rethrow;
+    } on Exception catch (e) {
+      throw Exception('Failed to load siswas: $e');
+    } catch (error) {
+      throw Exception('Failed to load siswas: $error');
     }
   }
 }

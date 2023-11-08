@@ -1,19 +1,19 @@
-class MapelModel {
+class JurusanModel {
   final int? id;
   final String? nama;
 
-  MapelModel({
+
+  JurusanModel({
     this.id,
     this.nama,
+
   });
 
-  factory MapelModel.fromJson(Map<String, dynamic> json) {
-    return MapelModel(
+  factory JurusanModel.fromJson(Map<String, dynamic> json) {
+    return JurusanModel(
       id: json['id'],
       nama: json['nama'],
+
     );
   }
 }
-
-
-

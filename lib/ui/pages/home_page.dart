@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:layanan/blocs/absensi/absensi_bloc.dart';
 import 'package:layanan/blocs/auth/auth_bloc.dart';
 import 'package:layanan/blocs/info/info_bloc.dart';
+import 'package:layanan/blocs/siswa/siswa_bloc.dart';
 
 import 'package:layanan/shared/theme.dart';
 import 'package:layanan/ui/widgets/home_info_item.dart';
@@ -58,7 +59,7 @@ class HomePage extends StatelessWidget {
             BottomNavigationBarItem(
                 icon: GestureDetector(
                   onTap: () {
-                    Navigator.pushNamed(context, '/nilai/all');
+                    Navigator.pushNamed(context, '/jadwal/all');
                   },
                   child: Image.asset(
                     'assets/ic_flash.png',
@@ -192,62 +193,85 @@ class HomePage extends StatelessWidget {
           ),
         ),
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Text(
-                'Profile Siswa ',
-                style: whiteTextStyle.copyWith(
-                  fontSize: 20,
-                  fontWeight: medium,
-                  // Ubah ke string yang tepat, misalnya 'bold'
-                ),
-              ),
-              const SizedBox(width: 8), // Jarak antara ikon dan teks
-              ColorFiltered(
-                colorFilter: const ColorFilter.mode(
-                  Colors.white, // Ubah warna sesuai kebutuhan
-                  BlendMode.srcIn,
-                ),
-                child: Image.asset(
-                  'assets/fi_user.png', // Ubah dengan path gambar yang sesuai
-                  width: 30, // Sesuaikan lebar gambar
-                  height: 30, // Sesuaikan tinggi gambar
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(
-            height: 22,
-          ),
-          // NamaWidget(siswa: siswa),
-          Text(
-            'Nisn : 1235',
-            style: whiteTextStyle.copyWith(
-              fontSize: 18,
-              fontWeight: FontWeight
-                  .normal, // Ubah ke string yang tepat, misalnya 'normal'
-              letterSpacing: 4,
-            ),
-          ),
-          Text(
-            'Kelas : 1235',
-            style: whiteTextStyle.copyWith(
-              fontSize: 18,
-              fontWeight: FontWeight
-                  .normal, // Ubah ke string yang tepat, misalnya 'normal'
-              letterSpacing: 4,
-            ),
-          ),
-          const SizedBox(
-            height: 1,
-          ),
-        ],
+      child: BlocProvider(
+        create: (context) => SiswaBloc()..add(SiswaGet()),
+        child: BlocBuilder<SiswaBloc, SiswaState>(
+          builder: (context, state) {
+            if (state is SiswaSuccess) {
+              if (state.siswa.isNotEmpty) {
+                final siswa = state.siswa[0];
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Text(
+                          'Profile Siswa ',
+                          style: whiteTextStyle.copyWith(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const SizedBox(width: 8),
+                        ColorFiltered(
+                          colorFilter: const ColorFilter.mode(
+                            Colors.white,
+                            BlendMode.srcIn,
+                          ),
+                          child: Image.asset(
+                            'assets/fi_user.png',
+                            width: 30,
+                            height: 30,
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 15),
+                    Text(
+                      'Nama : ${siswa.nama}',
+                      style: whiteTextStyle.copyWith(
+                        fontSize: 18,
+                        fontWeight: FontWeight.normal,
+                        letterSpacing: 4,
+                      ),
+                    ),
+                    Text(
+                      'Nisn : ${siswa.nisn}',
+                      style: whiteTextStyle.copyWith(
+                        fontSize: 18,
+                        fontWeight: FontWeight.normal,
+                        letterSpacing: 4,
+                      ),
+                    ),
+                    Text(
+                      'Kelas : ${siswa.kelasModel?.tingkat}${siswa.kelasModel?.nama} ${siswa.jurusanModel?.nama}',
+                      style: whiteTextStyle.copyWith(
+                        fontSize: 18,
+                        fontWeight: FontWeight.normal,
+                        letterSpacing: 4,
+                      ),
+                    ),
+                    const SizedBox(height: 1),
+                  ],
+                );
+              } else {
+                return Text(
+                  'No data available',
+                  style: whiteTextStyle,
+                );
+              }
+            } else if (state is SiswaLoading) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+            return const SizedBox();
+          },
+        ),
       ),
     );
   }
+
   // bagian card  end//
 
   // bagian layanan //
