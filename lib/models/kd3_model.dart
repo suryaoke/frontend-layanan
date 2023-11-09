@@ -1,6 +1,6 @@
 import 'package:layanan/models/mapel_model.dart';
+import 'package:layanan/models/nilaikd3_model.dart';
 import 'package:layanan/models/siswa_model.dart';
-
 
 class Kd3Model {
   final int? id;
@@ -16,20 +16,23 @@ class Kd3Model {
 
   final SiswaModel? siswaModel;
   final MapelModel? mapelModel;
+  final Nilaikd3Model? nilaikd3Model;
 
-  Kd3Model(
-      {this.id,
-      this.nilai,
-      this.remedial,
-      this.feedback,
-      this.status,
-      this.tugas,
-      this.tugasupload,
-      this.ket,
-      this.materi,
-      this.last,
-      this.siswaModel,
-      this.mapelModel});
+  Kd3Model({
+    this.id,
+    this.nilai,
+    this.remedial,
+    this.feedback,
+    this.status,
+    this.tugas,
+    this.tugasupload,
+    this.ket,
+    this.materi,
+    this.last,
+    this.siswaModel,
+    this.mapelModel,
+    this.nilaikd3Model,
+  });
 
   factory Kd3Model.fromJson(Map<String, dynamic> json) {
     return Kd3Model(
@@ -47,6 +50,9 @@ class Kd3Model {
           json['siswa'] == null ? null : SiswaModel.fromJson(json['siswa']),
       mapelModel:
           json['mapel'] == null ? null : MapelModel.fromJson(json['mapel']),
+      nilaikd3Model: json['nilaikd3'] == null
+          ? null
+          : Nilaikd3Model.fromJson(json['nilaikd3']),
     );
   }
 }

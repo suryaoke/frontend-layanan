@@ -3,12 +3,14 @@ import 'package:layanan/blocs/auth/auth_bloc.dart';
 import 'package:layanan/shared/theme.dart';
 import 'package:layanan/ui/pages/Tugas.dart';
 import 'package:layanan/ui/pages/absensi.dart';
+import 'package:layanan/ui/pages/forgot_pasword_page.dart';
 import 'package:layanan/ui/pages/home_page.dart';
 import 'package:layanan/ui/pages/jadwalmapel.dart';
 import 'package:layanan/ui/pages/nilai.dart';
 import 'package:layanan/ui/pages/onboarding_page.dart';
 import 'package:layanan/ui/pages/profile_edit_page.dart';
 import 'package:layanan/ui/pages/profile_page.dart';
+import 'package:layanan/ui/pages/profile_siswa_page.dart';
 import 'package:layanan/ui/pages/sign_in_page.dart';
 import 'package:layanan/ui/pages/sign_up_page.dart';
 import 'package:layanan/ui/pages/splash_page.dart';
@@ -59,6 +61,8 @@ class MyApp extends StatelessWidget {
           '/nilai/all': (context) => const NilaiPage(),
           '/tugas/all': (context) => const TugasPage(),
           '/jadwal/all': (context) => const JadwalmapelPage(),
+          '/profile/siswa': (context) => const ProfileSiswaPage(),
+          '/forgotpassword': (context) => ForgotPasswordPage(),
         },
       ),
     );

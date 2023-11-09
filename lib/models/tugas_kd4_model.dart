@@ -2,7 +2,7 @@ import 'package:layanan/models/mapel_model.dart';
 import 'package:layanan/models/nilaikd4_model.dart';
 import 'package:layanan/models/siswa_model.dart';
 
-class Kd4Model {
+class TugasKd4Model {
   final int? id;
   final String? nilai;
   final String? remedial;
@@ -18,7 +18,7 @@ class Kd4Model {
   final MapelModel? mapelModel;
   final Nilaikd4Model? nilaikd4Model;
 
-  Kd4Model(
+  TugasKd4Model(
       {this.id,
       this.nilai,
       this.remedial,
@@ -33,8 +33,8 @@ class Kd4Model {
       this.mapelModel,
       this.nilaikd4Model});
 
-  factory Kd4Model.fromJson(Map<String, dynamic> json) {
-    return Kd4Model(
+  factory TugasKd4Model.fromJson(Map<String, dynamic> json) {
+    return TugasKd4Model(
       id: json['id'],
       nilai: json['nilai'],
       remedial: json['remedial'],

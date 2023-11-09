@@ -1,6 +1,6 @@
 class Nilaikd4Model {
   final int? id;
-  final String? ph;
+  final int? ph;
 
   Nilaikd4Model({
     this.id,

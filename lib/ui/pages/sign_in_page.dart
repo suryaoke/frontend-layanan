@@ -10,15 +10,15 @@ import 'package:layanan/ui/widgets/buttons.dart';
 import 'package:layanan/ui/widgets/forms.dart';
 
 class SignInPage extends StatefulWidget {
-  const SignInPage({super.key});
+  const SignInPage({Key? key}) : super(key: key);
 
   @override
-  State<SignInPage> createState() => _SignInPageState();
+  _SignInPageState createState() => _SignInPageState();
 }
 
 class _SignInPageState extends State<SignInPage> {
-  final usernameController = TextEditingController(text: '');
-  final passwordController = TextEditingController(text: '');
+  final usernameController = TextEditingController();
+  final passwordController = TextEditingController();
 
   bool validate() {
     if (usernameController.text.isEmpty || passwordController.text.isEmpty) {
@@ -52,20 +52,16 @@ class _SignInPageState extends State<SignInPage> {
             );
           }
           return ListView(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 24,
-            ),
+            padding: const EdgeInsets.symmetric(horizontal: 24),
             children: [
               Container(
                 width: 155,
                 height: 150,
-                margin: const EdgeInsets.only(
-                  top: 100,
-                  bottom: 100,
-                ),
+                margin: const EdgeInsets.only(top: 100, bottom: 100),
                 decoration: const BoxDecoration(
                   image: DecorationImage(
-                      image: AssetImage('assets/img_mankotapadang.png')),
+                    image: AssetImage('assets/img_mankotapadang.png'),
+                  ),
                 ),
               ),
               Text(
@@ -87,16 +83,15 @@ class _SignInPageState extends State<SignInPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    //Note username
+                    // Note username
                     CustomFormField(
                       title: 'Username',
                       controller: usernameController,
                     ),
-
                     const SizedBox(
                       height: 16,
                     ),
-                    //Note password
+                    // Note password
                     CustomFormField(
                       title: 'Password',
                       obscureText: true,
@@ -105,19 +100,23 @@ class _SignInPageState extends State<SignInPage> {
                     const SizedBox(
                       height: 8,
                     ),
-
                     Align(
                       alignment: Alignment.centerRight,
-                      child: Text(
-                        'Forgot Password',
-                        style: blueTextStyle,
+                      child: TextButton(
+                        onPressed: () {
+                          Navigator.pushNamed(context, '/forgotpassword');
+                        },
+                        child: Text(
+                          'Forgot Password',
+                          style: blueTextStyle,
+                        ),
                       ),
                     ),
                     const SizedBox(
                       height: 30,
                     ),
                     CustomFilledButton(
-                      title: 'Sign In',
+                      title: 'Login',
                       onPressed: () {
                         if (validate()) {
                           context.read<AuthBloc>().add(
@@ -143,12 +142,6 @@ class _SignInPageState extends State<SignInPage> {
               const SizedBox(
                 height: 50,
               ),
-              // CustomTextButton(
-              //   title: 'Create New Account',
-              //   onPressed: () {
-              //     Navigator.pushNamed(context, '/sign-up');
-              //   },
-              // )
             ],
           );
         },

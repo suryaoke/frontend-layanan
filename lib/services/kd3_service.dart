@@ -16,9 +16,9 @@ class Kd3Service {
         },
       );
       if (response.statusCode == 200) {
-        List<dynamic> kd3Data = jsonDecode(response.body)['kd3'];
+        List<dynamic> jsonData = json.decode(response.body)['kd3'];
         List<Kd3Model> kd3List =
-            kd3Data.map((item) => Kd3Model.fromJson(item)).toList();
+            List<Kd3Model>.from(jsonData.map((x) => Kd3Model.fromJson(x)));
         return kd3List;
       } else {
         throw Exception('Failed to load data');

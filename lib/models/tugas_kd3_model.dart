@@ -1,8 +1,8 @@
 import 'package:layanan/models/mapel_model.dart';
-import 'package:layanan/models/nilaikd4_model.dart';
+import 'package:layanan/models/nilaikd3_model.dart';
 import 'package:layanan/models/siswa_model.dart';
 
-class Kd4Model {
+class TugasKd3Model {
   final int? id;
   final String? nilai;
   final String? remedial;
@@ -16,25 +16,26 @@ class Kd4Model {
 
   final SiswaModel? siswaModel;
   final MapelModel? mapelModel;
-  final Nilaikd4Model? nilaikd4Model;
+  final Nilaikd3Model? nilaikd3Model;
 
-  Kd4Model(
-      {this.id,
-      this.nilai,
-      this.remedial,
-      this.feedback,
-      this.status,
-      this.tugas,
-      this.tugasupload,
-      this.ket,
-      this.materi,
-      this.last,
-      this.siswaModel,
-      this.mapelModel,
-      this.nilaikd4Model});
+  TugasKd3Model({
+    this.id,
+    this.nilai,
+    this.remedial,
+    this.feedback,
+    this.status,
+    this.tugas,
+    this.tugasupload,
+    this.ket,
+    this.materi,
+    this.last,
+    this.siswaModel,
+    this.mapelModel,
+    this.nilaikd3Model,
+  });
 
-  factory Kd4Model.fromJson(Map<String, dynamic> json) {
-    return Kd4Model(
+  factory TugasKd3Model.fromJson(Map<String, dynamic> json) {
+    return TugasKd3Model(
       id: json['id'],
       nilai: json['nilai'],
       remedial: json['remedial'],
@@ -49,9 +50,9 @@ class Kd4Model {
           json['siswa'] == null ? null : SiswaModel.fromJson(json['siswa']),
       mapelModel:
           json['mapel'] == null ? null : MapelModel.fromJson(json['mapel']),
-      nilaikd4Model: json['nilaikd4'] == null
+      nilaikd3Model: json['nilaikd3'] == null
           ? null
-          : Nilaikd4Model.fromJson(json['nilaikd4']),
+          : Nilaikd3Model.fromJson(json['nilaikd3']),
     );
   }
 }

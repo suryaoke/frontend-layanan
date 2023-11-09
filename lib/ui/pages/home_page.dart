@@ -59,7 +59,7 @@ class HomePage extends StatelessWidget {
             BottomNavigationBarItem(
                 icon: GestureDetector(
                   onTap: () {
-                    Navigator.pushNamed(context, '/jadwal/all');
+                    Navigator.pushNamed(context, '/nilai/all');
                   },
                   child: Image.asset(
                     'assets/ic_flash.png',
@@ -176,20 +176,19 @@ class HomePage extends StatelessWidget {
   // bagian profil End //
 
   // bagian card //
+
   Widget buildWalletCard() {
     return Container(
       width: double.infinity,
       height: 220,
-      margin: const EdgeInsets.only(
-        top: 30,
-      ),
-      padding: const EdgeInsets.all(30),
+      margin: const EdgeInsets.only(top: 30.0),
+      padding: const EdgeInsets.all(30.0),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(28),
         image: const DecorationImage(
           fit: BoxFit.cover,
           image: AssetImage(
-            'assets/img_bg_card.png',
+            'assets/img_bg_card.png', // ganti dengan alamat gambar yang sesuai
           ),
         ),
       ),
@@ -200,59 +199,64 @@ class HomePage extends StatelessWidget {
             if (state is SiswaSuccess) {
               if (state.siswa.isNotEmpty) {
                 final siswa = state.siswa[0];
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Text(
-                          'Profile Siswa ',
-                          style: whiteTextStyle.copyWith(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
+                return GestureDetector(
+                  onTap: () {
+                    Navigator.pushNamed(context, '/profile/siswa');
+                  },
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Text(
+                            'Profile Siswa ',
+                            style: whiteTextStyle.copyWith(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
+                          const SizedBox(width: 8),
+                          ColorFiltered(
+                            colorFilter: const ColorFilter.mode(
+                              Colors.white,
+                              BlendMode.srcIn,
+                            ),
+                            child: Image.asset(
+                              'assets/fi_user.png', // ganti dengan alamat gambar yang sesuai
+                              width: 30,
+                              height: 30,
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 15),
+                      Text(
+                        'Nama : ${siswa.nama}',
+                        style: whiteTextStyle.copyWith(
+                          fontSize: 18,
+                          fontWeight: FontWeight.normal,
+                          letterSpacing: 4,
                         ),
-                        const SizedBox(width: 8),
-                        ColorFiltered(
-                          colorFilter: const ColorFilter.mode(
-                            Colors.white,
-                            BlendMode.srcIn,
-                          ),
-                          child: Image.asset(
-                            'assets/fi_user.png',
-                            width: 30,
-                            height: 30,
-                          ),
+                      ),
+                      Text(
+                        'Nisn : ${siswa.nisn}',
+                        style: whiteTextStyle.copyWith(
+                          fontSize: 18,
+                          fontWeight: FontWeight.normal,
+                          letterSpacing: 4,
                         ),
-                      ],
-                    ),
-                    const SizedBox(height: 15),
-                    Text(
-                      'Nama : ${siswa.nama}',
-                      style: whiteTextStyle.copyWith(
-                        fontSize: 18,
-                        fontWeight: FontWeight.normal,
-                        letterSpacing: 4,
                       ),
-                    ),
-                    Text(
-                      'Nisn : ${siswa.nisn}',
-                      style: whiteTextStyle.copyWith(
-                        fontSize: 18,
-                        fontWeight: FontWeight.normal,
-                        letterSpacing: 4,
+                      Text(
+                        'Kelas : ${siswa.kelasModel?.tingkat}${siswa.kelasModel?.nama} ${siswa.jurusanModel?.nama}',
+                        style: whiteTextStyle.copyWith(
+                          fontSize: 18,
+                          fontWeight: FontWeight.normal,
+                          letterSpacing: 4,
+                        ),
                       ),
-                    ),
-                    Text(
-                      'Kelas : ${siswa.kelasModel?.tingkat}${siswa.kelasModel?.nama} ${siswa.jurusanModel?.nama}',
-                      style: whiteTextStyle.copyWith(
-                        fontSize: 18,
-                        fontWeight: FontWeight.normal,
-                        letterSpacing: 4,
-                      ),
-                    ),
-                    const SizedBox(height: 1),
-                  ],
+                      const SizedBox(height: 1),
+                    ],
+                  ),
                 );
               } else {
                 return Text(
